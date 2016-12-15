@@ -51,8 +51,8 @@ Must run `roscore` first (in different terminal)
 Running with custom naming:  
 `rosrun turtlesim turtlesim_node __name:=my_turtle`  
 To visualize node diagram:  
-`rosrun rqt-graph rqt-graph`  
-Use `rostopic` to get into on ROS topics:  
+`rqt_graph` or `rosrun rqt_graph rqt_graph`  
+Use `rostopic` to get info on ROS topics:  
 `rostopic list`  
 `rostopic echo /turtle1/cmd_vel`  
 `rostopic type /turtle1/cmd_vel` to get name of message type  
@@ -61,7 +61,7 @@ Use `rosmsg` for more information on message
 To publish data on to a topic:  
 `rostopic pub -1 /turtle1/cmd_vel geometry_msgs/Twist -- '[2.0, 0.0, 0.0]' '[0.0, 0.0, 1.8]'`  
 To graph data over time:  
-`rosrun rqt_plot rqt_plot`  
+`rqt_plot` or `rosrun rqt_plot rqt_plot`  
 
 ### Services
 Services allow nodes to send a request and get a response  
@@ -82,23 +82,23 @@ Use `rosparam` to store and update data on the ROS Parameter Server
 
 ### Debugging with rqt_console
 `rqt_console` attaches to ROS's logging framework to display output from nodes.  
-`rosrun rqt_console rqt_console`  
+`rqt_console` or `rosrun rqt_console rqt_console`  
 `rqt_logger_level` is used to change verbosity level  
-`rosrun rqt_logger_level rqt_logger_level`  
+`rqt_logger_level` or `rosrun rqt_logger_level rqt_logger_level`  
 
 ### Using roslaunch
-`roslaunch` starts nodes as defined in a launch file. This example will launch two turtlesim and mimic actions from turtlesim1 to turtlesim2  
+`roslaunch` starts nodes as defined in a launch file. This example will launch two turtlesim nodes and mimic actions from turtlesim1 to turtlesim2,  
 `roscd beginner_tutorials`  
 `mkdir launch && cd lauch`  
 Take a look at `turtlemimic.launch` file  
 `roslaunch beginner_tutorials turtlemimic.launch`  
 `rostopic pub /turtlesim1/turtle1/cmd_vel geometry_msgs/Twist -r 1 -- '[2.0, 0.0, 0.0]' '[0.0, 0.0, -1.8]'`  
 
-### Basics of msg and srv
+### Basics of Message and Service (msg and srv)
 `msg` files define the fields of ROS messages and are used to generate source code for messages.  
 `srv` files define a service's request and response.  
 
-#### Using msg 
+#### Using Message 
 Example of a msg that uses a Header, a string primitive, and two other msgs: 
 ```
 Header header
@@ -107,14 +107,14 @@ Header header
   geometry_msgs/TwistWithCovariance twist
 ```
 
-Look at beginner_tutorials/msg for a basic msg example.  
+Look in `beginner_tutorials/msg` for a basic msg example.  
 Remeber to update `package.xml` and enable the `message_generation` and `message_runtime` dependencies.  
 Also need to add `message_generation` to the required components in `CMakeLists.txt` and `message_runtime` to the `CATKIN_DEPENDS` section.  
 Add message file name to the `add_message_files` section of `CMakeLists.txt`  
 Make sure `generate_messages` is called in `CMakeLists.txt`  
 Verify message with `rosmsg show beginner_tutorials/Num`  
 
-#### Using srv
+#### Using Service
 srv files separate the request and reponse with a `---` line:
 ```
 int64 A
@@ -122,7 +122,7 @@ int64 B
 ---
 int64 Sum
 ```
-Take a look at beginner_tutorials/srv for a basic srv example.  
+Take a look in `beginner_tutorials/srv` for a basic service example.  
 Remeber to update `package.xml` and enable the `message_generation` and `message_runtime` dependencies.  
 Also need to add `message_generation` to the required components in `CMakeLists.txt` and `message_runtime` to the `CATKIN_DEPENDS` section.  
 Add service file name to the `add_service_files` section of `CMakeLists.txt`  
